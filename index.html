@@ -707,7 +707,7 @@
             </div>
 
             <!-- Reemplazar # por el enlace real de compra del e-book -->
-            <a class="btn btn-pink" href="#" onclick="openCheckout(event, 'ebook')">Quiero mi e-book →</a>
+            <a class="btn btn-pink" href="#" onclick="return ebookPlaceholder(event)">Quiero mi e-book →</a>
             <p class="independent">Producto digital independiente del servicio de páginas para sorteos.</p>
           </div>
         </div>
@@ -746,6 +746,17 @@
     </div>
   </div>
 
+  <div class="checkout-overlay" id="paymentResultOverlay" role="dialog" aria-modal="true" aria-labelledby="paymentResultTitle">
+    <div class="checkout-modal">
+      <span class="eyebrow" id="paymentResultEyebrow">Compra realizada</span>
+      <h3 id="paymentResultTitle">¡Gracias por tu compra!</h3>
+      <p id="paymentResultText" style="margin-top:10px;"></p>
+      <div style="margin-top:24px;">
+        <a class="btn btn-primary" href="/">Volver al inicio →</a>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="container">
       <p>© 2026 Evelyn Maroli · Soluciones digitales para emprendedores</p>
@@ -769,6 +780,7 @@
     function openCheckout(event, productKey) {
       if (event) event.preventDefault();
       selectedProduct = products[productKey];
+      sessionStorage.setItem('checkoutProductKey', productKey);
       document.getElementById('checkoutProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
       document.getElementById('checkoutMessage').textContent = '';
       document.getElementById('checkoutOverlay').classList.add('open');
@@ -787,6 +799,50 @@
         window.location.href = result.init_point;
       } catch (error) { message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.'; }
     }
+    function showPaymentResult() {
+      const params = new URLSearchParams(window.location.search);
+      const pago = params.get('pago');
+      if (!pago) return;
+
+      const productKey = sessionStorage.getItem('checkoutProductKey');
+      const overlay = document.getElementById('paymentResultOverlay');
+      const title = document.getElementById('paymentResultTitle');
+      const text = document.getElementById('paymentResultText');
+      const eyebrow = document.getElementById('paymentResultEyebrow');
+
+      if (pago === 'exitoso') {
+        eyebrow.textContent = 'Compra realizada';
+        title.textContent = '¡Gracias por tu compra!';
+
+        if (productKey === 'ebook') {
+          text.textContent = 'Recibimos correctamente tu pago. En unos minutos vas a recibir tu e-book en el email que utilizaste durante la compra. Revisá también la carpeta de spam o correo no deseado.';
+        } else {
+          text.textContent = 'Recibimos correctamente tu pedido. Te vamos a estar contactando por los datos que dejaste para enviarte toda la información y los próximos pasos.';
+        }
+
+        overlay.classList.add('open');
+      }
+
+      if (pago === 'pendiente') {
+        eyebrow.textContent = 'Pago pendiente';
+        title.textContent = 'Tu pago está pendiente';
+        text.textContent = 'Mercado Pago todavía no confirmó la operación. Te vamos a contactar cuando tengamos novedades.';
+        overlay.classList.add('open');
+      }
+
+      if (pago === 'rechazado') {
+        eyebrow.textContent = 'Pago no completado';
+        title.textContent = 'No pudimos completar el pago';
+        text.textContent = 'La operación no fue aprobada. Podés intentarlo nuevamente cuando quieras.';
+        overlay.classList.add('open');
+      }
+
+      sessionStorage.removeItem('checkoutProductKey');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    showPaymentResult();
+
     document.getElementById('checkoutOverlay').addEventListener('click', (event) => { if (event.target.id === 'checkoutOverlay') closeCheckout(); });
   </script>
 

@@ -65,7 +65,7 @@ module.exports = async function handler(req, res) {
     const metadata = payment.metadata || {};
 
    const appsScriptUrl =
-  'https://script.google.com/macros/s/AKfycbxkkRltdWNA2uD8Wl7_XUoygq_iiUCoUe6u_sdmNo-4QndTtPcUj_2NULXCAflNmaE/exec';
+  'https://script.google.com/macros/s/AKfycbwBtJ2C_sqQXPg-yr_FV2GS9oxJoqNJiNZxIJg5i-6PHQxP11eovvbVFPNcKUrKErX8/exec';
 
     // Enviamos la información verificada a Google Sheets
     const sheetsResponse = await fetch(

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Soluciones digitales para emprendedores: páginas personalizadas para sorteos y e-book para emprendedores.">
+  <title>Evelyn Maroli | Soluciones digitales para emprendedores</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --lavender: #c9b7e8;
+      --lavender-deep: #80649f;
+      --pink: #f2b8c8;
+      --pink-deep: #b85f7a;
+      --green: #b9cfbd;
+      --green-deep: #5c8067;
+      --beige: #f7f0e5;
+      --cream: #fffaf4;
+      --ink: #29242b;
+      --muted: #716a72;
+      --white: #ffffff;
+      --line: rgba(41,36,43,.10);
+      --shadow: 0 20px 60px rgba(70, 52, 75, .10);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--lavender-deep);
+      margin-bottom: 18px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      line-height: 1.05;
+      font-weight: 600;
+    }
+    h1 { font-size: clamp(3.4rem, 8vw, 7.2rem); letter-spacing: -.045em; }
+    h2 { font-size: clamp(2.5rem, 5vw, 4.7rem); letter-spacing: -.035em; }
+    h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+
+    p { color: var(--muted); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .95rem;
+      border: 1px solid transparent;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(70,52,75,.12); }
+    .btn-primary { background: var(--ink); color: white; }
+    .btn-lavender { background: var(--lavender-deep); color: white; }
+    .btn-pink { background: var(--pink-deep); color: white; }
+    .btn-light { background: rgba(255,255,255,.75); border-color: var(--line); }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      z-index: 50;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, calc(100% - 28px));
+      padding: 12px 14px 12px 20px;
+      background: rgba(255,250,244,.82);
+      border: 1px solid rgba(41,36,43,.08);
+      backdrop-filter: blur(18px);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 35px rgba(60,42,65,.06);
+    }
+    .brand {
+      font-family: "Playfair Display", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-size: .88rem;
+      font-weight: 600;
+    }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav .btn { min-height: 42px; padding: 0 18px; font-size: .82rem; }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      padding: 150px 0 80px;
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(201,183,232,.45), transparent 28%),
+        radial-gradient(circle at 88% 30%, rgba(242,184,200,.42), transparent 27%),
+        var(--cream);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .hero-copy p {
+      max-width: 620px;
+      font-size: 1.15rem;
+      margin: 28px 0 30px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-note { margin-top: 16px; font-size: .82rem; }
+
+    .hero-art {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+    }
+    .blob {
+      width: min(430px, 90%);
+      aspect-ratio: 1 / 1.12;
+      border-radius: 48% 52% 58% 42% / 45% 42% 58% 55%;
+      background: var(--lavender);
+      transform: rotate(-7deg);
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+    .blob::after {
+      content: "";
+      position: absolute;
+      inset: 14%;
+      border-radius: 40% 60% 50% 50%;
+      background: var(--pink);
+      transform: rotate(15deg);
+      opacity: .9;
+    }
+    .mini-card {
+      position: absolute;
+      z-index: 2;
+      background: rgba(255,250,244,.92);
+      border: 1px solid rgba(41,36,43,.08);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .mini-card.one { top: 12%; right: 0; width: 210px; transform: rotate(4deg); }
+    .mini-card.two { bottom: 10%; left: 0; width: 225px; transform: rotate(-4deg); background: var(--green); }
+    .mini-card strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .mini-card span { font-size: .82rem; color: var(--muted); }
+
+    .choice-wrap { margin-top: 55px; }
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .choice {
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .3s ease;
+    }
+    .choice:hover { transform: translateY(-6px); }
+    .choice-lavender { background: var(--lavender); }
+    .choice-pink { background: var(--pink); }
+    .choice-icon { font-size: 1.8rem; }
+    .choice h3 { font-size: 1.8rem; margin: 8px 0 5px; }
+    .choice p { color: rgba(41,36,43,.68); font-size: .92rem; }
+    .choice-link { margin-top: 18px; font-weight: 700; font-size: .9rem; }
+
+    /* TRANSITION */
+    .marquee {
+      overflow: hidden;
+      padding: 22px 0;
+      background: var(--ink);
+      color: white;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 34px;
+      animation: scroll 24s linear infinite;
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+    }
+    .marquee span { opacity: .8; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTION */
+    section { padding: 120px 0; }
+    .section-intro { max-width: 760px; margin-bottom: 55px; }
+    .section-intro p { margin-top: 20px; font-size: 1.08rem; max-width: 650px; }
+
+    /* SORTEOS */
+    .sorteos { background: var(--lavender); }
+    .service-hero {
+      display: grid;
+      grid-template-columns: 1fr .85fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .service-hero p { font-size: 1.1rem; max-width: 620px; margin: 25px 0; }
+    .price-pill {
+      display: inline-flex;
+      flex-direction: column;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(41,36,43,.08);
+      padding: 17px 22px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+    }
+    .price-pill small { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+    .price-pill strong { font-size: 2rem; line-height: 1.1; }
+
+    .browser {
+      background: var(--cream);
+      border-radius: 28px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      transform: rotate(2deg);
+    }
+    .browser-top {
+      display: flex; gap: 6px; padding: 5px 7px 12px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); }
+    .browser-screen {
+      border-radius: 20px;
+      background: white;
+      padding: 28px;
+      min-height: 390px;
+    }
+    .mock-logo { width: 70px; height: 10px; background: var(--lavender); border-radius: 10px; margin-bottom: 25px; }
+    .mock-title { width: 75%; height: 25px; background: #eee8f4; border-radius: 10px; margin-bottom: 10px; }
+    .mock-sub { width: 55%; height: 12px; background: #f2edf4; border-radius: 10px; margin-bottom: 28px; }
+    .numbers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .number {
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--beige);
+      font-size: .75rem;
+      font-weight: 700;
+    }
+    .number.selected { background: var(--pink); }
+    .mock-button { margin-top: 25px; height: 42px; border-radius: 999px; background: var(--ink); }
+
+    /* PROCESS */
+    .process { background: var(--beige); }
+    .process-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .process-card {
+      min-height: 250px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: transform .3s ease;
+    }
+    .process-card:hover { transform: translateY(-5px); }
+    .step {
+      font-family: "Playfair Display", serif;
+      font-size: 3rem;
+      color: var(--lavender-deep);
+      line-height: 1;
+      margin-bottom: 35px;
+    }
+    .process-card h3 { font-size: 1.45rem; margin-bottom: 8px; }
+
+    /* FEATURES */
+    .features { background: var(--cream); }
+    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .feature {
+      padding: 24px;
+      border-radius: 22px;
+      min-height: 170px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .feature:nth-child(3n) { background: var(--green); }
+    .feature:nth-child(4n) { background: var(--pink); }
+    .feature h3 { font-size: 1.35rem; margin: 28px 0 7px; }
+    .feature p { font-size: .88rem; color: rgba(41,36,43,.67); }
+    .feature-icon { font-size: 1.25rem; }
+
+    /* FOR WHO */
+    .for-who { background: var(--green); }
+    .forwho-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
+    .forwho-list { display: grid; gap: 12px; }
+    .forwho-item {
+      background: rgba(255,255,255,.54);
+      border-radius: 18px;
+      padding: 20px 22px;
+      font-size: 1rem;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .check { font-weight: 800; font-size: 1.1rem; }
+    .forwho-cta { margin-top: 28px; }
+
+    /* PRICE / RESET */
+    .price-section { background: var(--cream); }
+    .price-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 50px;
+      border-radius: var(--radius-xl);
+      background: var(--ink);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .price-card p { color: rgba(255,255,255,.68); }
+    .price-card h2 { margin: 8px 0 20px; }
+    .price-card .big-price { font-size: clamp(3rem, 7vw, 5rem); font-family: "Playfair Display", serif; line-height: 1; margin: 15px 0 5px; }
+    .price-card .launch { color: var(--pink); font-weight: 700; }
+    .included-inline { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0; }
+    .included-inline span {
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .78rem;
+      color: rgba(255,255,255,.82);
+    }
+    .time { margin: 15px 0 28px; font-weight: 700; }
+    .price-card .btn { background: var(--pink); color: var(--ink); }
+
+    .reset {
+      margin-top: 18px;
+      padding: 40px;
+      border-radius: var(--radius-xl);
+      background: var(--pink);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+    .reset h3 { margin-bottom: 10px; }
+    .reset-price { font-family: "Playfair Display", serif; font-size: 2.6rem; white-space: nowrap; }
+
+    /* SUPPORT */
+    .support {
+      padding: 75px 0;
+      background: var(--beige);
+      text-align: center;
+    }
+    .support p { max-width: 680px; margin: 15px auto 0; }
+
+    /* EBOOK */
+    .ebook { background: var(--pink); }
+    .ebook-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 75px; align-items: center; }
+    .book {
+      width: min(360px, 85%);
+      margin: 0 auto;
+      aspect-ratio: .72;
+      border-radius: 8px 18px 18px 8px;
+      background: var(--lavender-deep);
+      color: white;
+      padding: 35px;
+      box-shadow: 20px 25px 0 rgba(255,255,255,.35), var(--shadow);
+      transform: rotate(-5deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .book small { letter-spacing: .12em; font-weight: 700; }
+    .book h3 { font-size: 2.5rem; }
+    .book-bottom { font-size: .75rem; opacity: .75; }
+    .ebook-price {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin: 28px 0 22px;
+      color: var(--ink);
+    }
+    .ebook-points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 8px 0 28px; }
+    .ebook-point {
+      padding: 16px;
+      background: rgba(255,255,255,.48);
+      border-radius: 16px;
+      font-weight: 600;
+    }
+    .independent { font-size: .78rem; margin-top: 14px; color: rgba(41,36,43,.6); }
+
+    /* FINAL CTA */
+    .final-cta {
+      padding: 130px 0;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(201,183,232,.65), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(185,207,189,.7), transparent 25%),
+        var(--cream);
+      text-align: center;
+    }
+    .final-cta p { max-width: 550px; margin: 20px auto 30px; font-size: 1.08rem; }
+    .final-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    footer {
+      padding: 30px 0;
+      background: var(--ink);
+      color: white;
+      text-align: center;
+      font-size: .8rem;
+    }
+    footer p { color: rgba(255,255,255,.55); }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .hero-grid, .service-hero, .forwho-grid, .ebook-grid { grid-template-columns: 1fr; }
+      .hero-art { min-height: 430px; order: -1; }
+      .service-hero > .browser { max-width: 620px; margin: 0 auto; width: 100%; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-list { grid-template-columns: repeat(2, 1fr); }
+      .nav-links a { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav { top: 10px; width: calc(100% - 18px); }
+      .brand { font-size: 1.15rem; }
+      .nav .btn { min-height: 38px; padding: 0 14px; }
+      section { padding: 82px 0; }
+      .hero { padding: 120px 0 55px; }
+      h1 { font-size: clamp(3.1rem, 17vw, 5rem); }
+      h2 { font-size: clamp(2.45rem, 12vw, 4rem); }
+      .hero-grid { gap: 25px; }
+      .hero-art { min-height: 340px; }
+      .blob { width: 280px; }
+      .mini-card.one { right: 0; top: 6%; width: 165px; padding: 15px; }
+      .mini-card.two { left: 0; bottom: 4%; width: 175px; padding: 15px; }
+      .choice-grid, .process-list, .features-grid, .ebook-points { grid-template-columns: 1fr; }
+      .choice { min-height: 170px; }
+      .process-card { min-height: 205px; }
+      .step { margin-bottom: 22px; }
+      .price-card { padding: 32px 24px; }
+      .reset { grid-template-columns: 1fr; padding: 30px 24px; }
+      .reset-price { font-size: 2.2rem; }
+      .book { width: 260px; }
+      .ebook-grid { gap: 60px; }
+      .hero-actions .btn, .final-actions .btn { width: 100%; }
+    }
+
+    .checkout-overlay { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(41,36,43,.42); backdrop-filter: blur(8px); }
+    .checkout-overlay.open { display: flex; }
+    .checkout-modal { width: min(520px, 100%); background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px; box-shadow: 0 30px 80px rgba(41,36,43,.22); position: relative; }
+    .checkout-close { position: absolute; top: 14px; right: 16px; border: 0; background: transparent; font-size: 1.5rem; cursor: pointer; color: var(--muted); }
+    .checkout-form { display: grid; gap: 14px; margin-top: 22px; }
+    .checkout-form label { font-size: .82rem; font-weight: 700; }
+    .checkout-form input { width: 100%; margin-top: 6px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--ink); font: inherit; outline: none; }
+    .checkout-form input:focus { border-color: var(--lavender-deep); }
+    .checkout-product { padding: 12px 14px; border-radius: 14px; background: rgba(201,183,232,.22); font-weight: 700; }
+    .checkout-message { font-size: .85rem; min-height: 20px; }
+    .reset-action { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+    @media (max-width: 700px) { .reset-action { justify-content: flex-start; } .checkout-modal { padding: 24px; } }
+
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <a class="brand" href="#inicio">evelyn maroli.</a>
+    <div class="nav-links">
+      <a href="#sorteos">Páginas para sorteos</a>
+      <a href="#ebook">E-book</a>
+      <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página</a>
+    </div>
+  </nav>
+
+  <main id="inicio">
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy reveal">
+            <span class="eyebrow">Soluciones digitales</span>
+            <h1>Herramientas para hacer crecer tu emprendimiento.</h1>
+            <p>Servicios y recursos pensados para ayudarte a organizar, automatizar y potenciar lo que hacés.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#sorteos">Ver páginas para sorteos ↓</a>
+              <a class="btn btn-light" href="#ebook">Ver e-book</a>
+            </div>
+            <p class="hero-note">Elegí la solución que necesitás y conocé todos los detalles.</p>
+          </div>
+
+          <div class="hero-art reveal">
+            <div class="blob"></div>
+            <div class="mini-card one">
+              <strong>Automatizá</strong>
+              <span>La gestión de tus sorteos.</span>
+            </div>
+            <div class="mini-card two">
+              <strong>Organizate</strong>
+              <span>Ideas y herramientas para emprender.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="choice-wrap reveal">
+          <div class="choice-grid">
+            <a href="#sorteos" class="choice choice-lavender">
+              <div>
+                <div class="choice-icon">🌐</div>
+                <h3>Páginas para sorteos</h3>
+                <p>Automatizá la venta y gestión de tus números.</p>
+              </div>
+              <span class="choice-link">Conocer el servicio →</span>
+            </a>
+            <a href="#ebook" class="choice choice-pink">
+              <div>
+                <div class="choice-icon">📖</div>
+                <h3>E-book para emprendedores</h3>
+                <p>Herramientas, ideas y estrategias para tu emprendimiento.</p>
+              </div>
+              <span class="choice-link">Conocer el e-book →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>ORGANIZÁ</span> · <span>AUTOMATIZÁ</span> · <span>CREÁ</span> · <span>EMPRENDÉ</span> ·
+        <span>ORGANIZÁ</span> · <span>AUTOMATIZÁ</span> · <span>CREÁ</span> · <span>EMPRENDÉ</span> ·
+        <span>ORGANIZÁ</span> · <span>AUTOMATIZÁ</span> · <span>CREÁ</span> · <span>EMPRENDÉ</span> ·
+      </div>
+    </div>
+
+    <section id="sorteos" class="sorteos">
+      <div class="container">
+        <div class="service-hero">
+          <div class="reveal">
+            <span class="eyebrow">Servicio para sorteos</span>
+            <h2>Automatizá tus sorteos.</h2>
+            <p>Una página personalizada para vender tus números, registrar las compras y tener toda la información organizada automáticamente.</p>
+
+            <div class="price-pill">
+              <small>Precio de lanzamiento</small>
+              <strong>$98.000 ARS</strong>
+            </div>
+
+            <div>
+              <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
+            </div>
+          </div>
+
+          <div class="browser reveal" aria-label="Ejemplo visual de una página para sorteo">
+            <div class="browser-top">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="browser-screen">
+              <div class="mock-logo"></div>
+              <div class="mock-title"></div>
+              <div class="mock-sub"></div>
+              <div class="numbers">
+                <div class="number">01</div><div class="number">02</div><div class="number selected">03</div><div class="number">04</div><div class="number">05</div>
+                <div class="number">06</div><div class="number selected">07</div><div class="number">08</div><div class="number">09</div><div class="number">10</div>
+                <div class="number">11</div><div class="number">12</div><div class="number">13</div><div class="number selected">14</div><div class="number">15</div>
+                <div class="number">16</div><div class="number">17</div><div class="number">18</div><div class="number">19</div><div class="number">20</div>
+              </div>
+              <div class="mock-button"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="process">
+      <div class="container">
+        <div class="section-intro reveal">
+          <span class="eyebrow">Así funciona</span>
+          <h2>De la elección del número al registro de la compra.</h2>
+          <p>Tu cliente hace el proceso desde la página y la información queda organizada para vos.</p>
+        </div>
+
+        <div class="process-list">
+          <article class="process-card reveal"><div class="step">01</div><h3>Entra a la página</h3><p>Tu cliente accede a la página personalizada de tu sorteo.</p></article>
+          <article class="process-card reveal"><div class="step">02</div><h3>Elige sus números</h3><p>Selecciona los números que quiere comprar entre los disponibles.</p></article>
+          <article class="process-card reveal"><div class="step">03</div><h3>Completa sus datos</h3><p>Ingresa la información necesaria para registrar la compra.</p></article>
+          <article class="process-card reveal"><div class="step">04</div><h3>Realiza el pago</h3><p>Completa el pago mediante el medio de pago integrado.</p></article>
+          <article class="process-card reveal"><div class="step">05</div><h3>La compra queda registrada</h3><p>La información de la compra se registra automáticamente.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="section-intro reveal">
+          <span class="eyebrow">Todo incluido</span>
+          <h2>Una página pensada para organizar tu sorteo.</h2>
+          <p>Me encargo de la configuración y puesta en funcionamiento para que puedas empezar a usarla.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature reveal"><div class="feature-icon">🌐</div><h3>Página personalizada</h3><p>Una página creada específicamente para tu dinámica.</p></article>
+          <article class="feature reveal"><div class="feature-icon">🔢</div><h3>Números disponibles</h3><p>Selección de los números que tus clientes quieren comprar.</p></article>
+          <article class="feature reveal"><div class="feature-icon">👤</div><h3>Registro de datos</h3><p>Los datos del comprador quedan registrados.</p></article>
+          <article class="feature reveal"><div class="feature-icon">💳</div><h3>Medio de pago</h3><p>Integración del medio de pago correspondiente.</p></article>
+          <article class="feature reveal"><div class="feature-icon">⚡</div><h3>Registro automático</h3><p>Las compras se registran automáticamente.</p></article>
+          <article class="feature reveal"><div class="feature-icon">📊</div><h3>Drive vinculado</h3><p>El Drive se actualiza con cada compra.</p></article>
+          <article class="feature reveal"><div class="feature-icon">⚙️</div><h3>Configuración</h3><p>Configuración y puesta en funcionamiento.</p></article>
+          <article class="feature reveal"><div class="feature-icon">✓</div><h3>Pruebas</h3><p>Verificación del funcionamiento antes de entregar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="for-who">
+      <div class="container">
+        <div class="forwho-grid">
+          <div class="reveal">
+            <span class="eyebrow">Pensada para vos</span>
+            <h2>Si hacés sorteos, esto te puede simplificar muchísimo.</h2>
+            <div class="forwho-cta">
+              <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
+            </div>
+          </div>
+          <div class="forwho-list">
+            <div class="forwho-item reveal"><span class="check">✓</span> Hacés sorteos y vendés números.</div>
+            <div class="forwho-item reveal"><span class="check">✓</span> Vendés números por WhatsApp.</div>
+            <div class="forwho-item reveal"><span class="check">✓</span> Perdés tiempo anotando compras manualmente.</div>
+            <div class="forwho-item reveal"><span class="check">✓</span> Querés tener toda la información más organizada.</div>
+            <div class="forwho-item reveal"><span class="check">✓</span> Querés ofrecer una experiencia más profesional a tus clientes.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="price-section">
+      <div class="container">
+
+        <div class="reset reveal">
+          <div>
+            <h3>¿Terminaste tu sorteo?</h3>
+            <p>La página puede seguir utilizándose. Si querés comenzar una nueva dinámica desde cero, podés solicitar un reinicio de números.</p>
+          </div>
+          <div class="reset-action"><div class="reset-price">$11.000 ARS</div><a class="btn" href="#" onclick="openCheckout(event, 'reinicio')">Quiero reiniciar mi sorteo →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="support">
+      <div class="container reveal">
+        <span class="eyebrow">Importante</span>
+        <h3>Mantenimiento y cambios futuros</h3>
+        <p>El mantenimiento técnico, soporte y modificaciones futuras no están incluidos. Se presupuestan aparte según lo que necesites.</p>
+      </div>
+    </section>
+
+    <section id="ebook" class="ebook">
+      <div class="container">
+        <div class="ebook-grid">
+          <div class="book reveal">
+            <h3>Mi e-book<br>para<br>emprendedores</h3>
+            <div class="book-bottom">Herramientas · ideas · estrategias</div>
+          </div>
+
+          <div class="reveal">
+            <span class="eyebrow">Otro recurso para vos</span>
+            <h2>Mi e-book para emprendedores.</h2>
+            <p style="margin-top:22px; font-size:1.08rem;">Herramientas, ideas y estrategias para ayudarte a organizarte, crear contenido y hacer crecer tu emprendimiento.</p>
+
+            <div class="ebook-price">$6.500 ARS</div>
+
+            <div class="ebook-points">
+              <div class="ebook-point">💡 Ideas</div>
+              <div class="ebook-point">📝 Herramientas</div>
+              <div class="ebook-point">📱 Contenido</div>
+              <div class="ebook-point">🚀 Estrategias</div>
+            </div>
+
+            <!-- Reemplazar # por el enlace real de compra del e-book -->
+            <a class="btn btn-pink" href="#" onclick="return ebookPlaceholder(event)">Quiero mi e-book →</a>
+            <p class="independent">Producto digital independiente del servicio de páginas para sorteos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="final-cta">
+      <div class="container reveal">
+        <span class="eyebrow">Elegí tu solución</span>
+        <h2>¿Qué necesitás para tu emprendimiento?</h2>
+        <p>Si querés automatizar tu próximo sorteo, puedo crear tu página personalizada.</p>
+        <div class="final-actions">
+          <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
+          <a class="btn btn-light" href="#" onclick="openCheckout(event, 'ebook')">Quiero el e-book →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="checkout-overlay" id="checkoutOverlay" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="checkout-modal">
+      <button class="checkout-close" type="button" onclick="closeCheckout()" aria-label="Cerrar">×</button>
+      <span class="eyebrow">Datos para continuar</span>
+      <h3 id="checkoutTitle">Completá tus datos</h3>
+      <p style="margin-top:10px;">Después de completar el formulario vas a continuar a Mercado Pago para realizar el pago.</p>
+      <div class="checkout-form">
+        <div class="checkout-product" id="checkoutProduct"></div>
+        <label>Nombre<input id="checkoutNombre" autocomplete="given-name" required></label>
+        <label>Apellido<input id="checkoutApellido" autocomplete="family-name" required></label>
+        <label>Celular<input id="checkoutCelular" type="tel" autocomplete="tel" required></label>
+        <label>Email<input id="checkoutEmail" type="email" autocomplete="email" required></label>
+        <button class="btn btn-primary" type="button" onclick="continueToPayment()">Continuar al pago →</button>
+        <div class="checkout-message" id="checkoutMessage"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Evelyn Maroli · Soluciones digitales para emprendedores</p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    const products = {
+      pagina: { name: 'Página personalizada para sorteo', price: 98000 },
+      reinicio: { name: 'Reinicio de números', price: 11000 },
+      ebook: { name: 'E-book para emprendedores', price: 6500 }
+    };
+    let selectedProduct = null;
+    function openCheckout(event, productKey) {
+      if (event) event.preventDefault();
+      selectedProduct = products[productKey];
+      document.getElementById('checkoutProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
+      document.getElementById('checkoutMessage').textContent = '';
+      document.getElementById('checkoutOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCheckout() { document.getElementById('checkoutOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+    async function continueToPayment() {
+      const data = { product: selectedProduct, nombre: document.getElementById('checkoutNombre').value.trim(), apellido: document.getElementById('checkoutApellido').value.trim(), celular: document.getElementById('checkoutCelular').value.trim(), email: document.getElementById('checkoutEmail').value.trim() };
+      const message = document.getElementById('checkoutMessage');
+      if (!data.nombre || !data.apellido || !data.celular || !data.email) { message.textContent = 'Completá todos los datos para continuar.'; return; }
+      message.textContent = 'Preparando el pago…';
+      try {
+        const response = await fetch('/api/create-preference', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const result = await response.json();
+        if (!response.ok || !result.init_point) throw new Error(result.error || 'No se pudo iniciar el pago.');
+        window.location.href = result.init_point;
+      } catch (error) { message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.'; }
+    }
+    document.getElementById('checkoutOverlay').addEventListener('click', (event) => { if (event.target.id === 'checkoutOverlay') closeCheckout(); });
+  </script>
+
+</body>
+</html>

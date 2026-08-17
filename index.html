@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Soluciones digitales para emprendedores: páginas personalizadas para sorteos y e-book para emprendedores.">
+  <meta name="description" content="Soluciones digitales para emprendedores: páginas para sorteos, tiendas online, gestión de Paid Media y recursos digitales.">
   <title>Evelyn Maroli | Soluciones digitales para emprendedores</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,6 +211,70 @@
     .choice:hover { transform: translateY(-6px); }
     .choice-lavender { background: var(--lavender); }
     .choice-pink { background: var(--pink); }
+    .choice-green { background: var(--green); }
+    .choice-beige { background: var(--beige); }
+    .choice-intro { margin-bottom: 28px; max-width: 760px; }
+    .choice-intro h2 { margin-top: 8px; }
+    .choice-grid .choice { text-decoration: none; color: var(--ink); }
+    .service-cards-single { grid-template-columns: minmax(0, 1fr); }
+    .service-cards-single .service-card {
+      border-radius: 28px;
+      padding: clamp(28px, 4vw, 52px);
+    }
+    .service-cards-single .service-card h3 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+    }
+    /* Identidad visual por servicio */
+    .service-section-store {
+      background: linear-gradient(135deg, #BF268A 0%, #BF268A 48%, #F2DF7E 100%);
+    }
+    .service-section-store .service-card {
+      background: #fffafc;
+      border-color: rgba(191, 38, 138, .20);
+    }
+    .service-section-store .eyebrow,
+    .service-section-store .service-price {
+      color: #BF268A;
+    }
+
+    .service-section-paid {
+      background: linear-gradient(135deg, #0777D9 0%, #0777D9 48%, #BEF299 100%);
+    }
+    .service-section-paid .service-card {
+      background: #fbfffa;
+      border-color: rgba(7, 119, 217, .20);
+    }
+    .service-section-paid .eyebrow,
+    .service-section-paid .service-price {
+      color: #0777D9;
+    }
+
+    .service-section-ebook {
+      background: linear-gradient(135deg, #F24C27 0%, #F24C27 48%, #F23078 100%);
+      color: var(--ink);
+    }
+    .service-section-ebook .ebook-grid {
+      background: transparent;
+    }
+    .service-section-ebook .book {
+      background: #fffaf8;
+    }
+    .service-section-ebook .eyebrow,
+    .service-section-ebook .ebook-price {
+      color: #F24C27;
+    }
+
+    /* Contenido editorial: cada servicio respira como una sección propia */
+    .service-section-store .new-services-intro,
+    .service-section-paid .new-services-intro {
+      max-width: 820px;
+    }
+    .service-section-store .service-card,
+    .service-section-paid .service-card {
+      box-shadow: none;
+      border-width: 1px;
+    }
     .choice-icon { font-size: 1.8rem; }
     .choice h3 { font-size: 1.8rem; margin: 8px 0 5px; }
     .choice p { color: rgba(41,36,43,.68); font-size: .92rem; }
@@ -295,6 +359,107 @@
     }
     .number.selected { background: var(--pink); }
     .mock-button { margin-top: 25px; height: 42px; border-radius: 999px; background: var(--ink); }
+
+    /* NUEVOS SERVICIOS */
+    .new-services {
+      background: var(--cream);
+    }
+    .new-services-intro {
+      max-width: 780px;
+      margin-bottom: 48px;
+    }
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+    .service-card {
+      border-radius: var(--radius-xl);
+      padding: 38px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      right: -85px;
+      top: -85px;
+      opacity: .48;
+    }
+    .service-card.store { background: #e5efe7; }
+    .service-card.store::after { background: var(--green); }
+    .service-card.paid { background: #f9e3e9; }
+    .service-card.paid::after { background: var(--pink); }
+    .service-card .service-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      font-size: 1.45rem;
+      margin-bottom: 22px;
+    }
+    .store .service-icon { background: var(--green); }
+    .paid .service-icon { background: var(--pink); }
+    .service-card h3 { font-size: clamp(1.8rem, 3vw, 2.45rem); margin-bottom: 12px; }
+    .service-card .service-description { min-height: 78px; font-size: 1rem; }
+    .service-card-price {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.5rem, 5vw, 3.7rem);
+      line-height: 1;
+      margin: 22px 0 25px;
+      color: var(--ink);
+    }
+    .service-card-price small {
+      display: block;
+      font-family: "DM Sans", sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    .service-card h4 {
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 26px 0 12px;
+    }
+    .service-includes {
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+    .service-includes li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: rgba(41,36,43,.76);
+      font-size: .92rem;
+    }
+    .service-includes li::before {
+      content: "✓";
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .service-note {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.5);
+      font-size: .86rem;
+    }
+    .service-note strong { color: var(--ink); }
+    .service-card .btn { margin-top: 26px; }
+    .store .btn { background: var(--green-deep); color: white; }
+    .paid .btn { background: var(--pink-deep); color: white; }
+    .service-extra { margin-top: 12px; font-size: .78rem; color: rgba(41,36,43,.58); }
 
     /* PROCESS */
     .process { background: var(--beige); }
@@ -461,8 +626,204 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+
+    /* === SERVICIOS: composición liviana, siguiendo la lógica de Sorteos === */
+    .service-section-store,
+    .service-section-paid,
+    .service-section-ebook {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-section-store {
+      background: #F2DF7E;
+    }
+
+    .service-section-paid {
+      background: #BEF299;
+    }
+
+    .service-section-ebook {
+      background: #F23078;
+    }
+
+    /* La información deja de estar encerrada en una tarjeta pesada. */
+    .service-section-store .service-cards-single,
+    .service-section-paid .service-cards-single {
+      display: block;
+      width: 100%;
+    }
+
+    .service-section-store .service-card,
+    .service-section-paid .service-card {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      max-width: none;
+    }
+
+    .service-section-store .service-card h3,
+    .service-section-paid .service-card h3 {
+      color: inherit;
+    }
+
+    /* El color principal funciona como acento, no como bloque que encierra todo. */
+    .service-section-store .eyebrow,
+    .service-section-store .service-price {
+      color: #BF268A;
+    }
+
+    .service-section-paid .eyebrow,
+    .service-section-paid .service-price {
+      color: #0777D9;
+    }
+
+    .service-section-store .service-card::before,
+    .service-section-paid .service-card::before {
+      content: "";
+      display: block;
+      width: 72px;
+      height: 8px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+      background: #BF268A;
+    }
+
+    .service-section-paid .service-card::before {
+      background: #0777D9;
+    }
+
+    /* El contenido interno conserva sus textos y elementos,
+       pero se distribuye en columnas ligeras. */
+    .service-section-store .service-card .service-content,
+    .service-section-paid .service-card .service-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 52px;
+      align-items: start;
+    }
+
+    .service-section-store .service-includes,
+    .service-section-paid .service-includes {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+
+    .service-section-store .service-includes li::marker {
+      color: #BF268A;
+    }
+
+    .service-section-paid .service-includes li::marker {
+      color: #0777D9;
+    }
+
+    /* Destacamos precio/CTA sin convertirlo en una tarjeta grande. */
+    .service-section-store .service-price,
+    .service-section-paid .service-price {
+      font-weight: 800;
+    }
+
+    .service-section-store .btn {
+      background: #BF268A;
+      border-color: #BF268A;
+      color: #fff;
+    }
+
+    .service-section-paid .btn {
+      background: #0777D9;
+      border-color: #0777D9;
+      color: #fff;
+    }
+
+    /* Ebook: mismo principio, sin tocar su contenido. */
+    .service-section-ebook .ebook-grid {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .service-section-ebook .book {
+      background: #F24C27;
+      box-shadow: none;
+    }
+
+    .service-section-ebook .eyebrow,
+    .service-section-ebook .ebook-price {
+      color: #F24C27;
+    }
+
+    .service-section-ebook .btn-pink {
+      background: #F24C27;
+      border-color: #F24C27;
+      color: #fff;
+    }
+
+    .service-section-ebook .ebook-point {
+      border-color: rgba(242, 76, 39, .28);
+    }
+
+
+    /* Presentación visual de servicios: mismo sistema, cuatro identidades. */
+    .service-editorial{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);gap:clamp(42px,6vw,84px);align-items:start}
+    .service-main h2,.ebook-main h2{margin-top:8px;max-width:760px}
+    .service-lead{max-width:720px;margin-top:20px;font-size:1.08rem;line-height:1.65}
+    .service-subsection{margin-top:34px}
+    .service-kicker{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:15px}
+    .service-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 28px}
+    .service-list li{position:relative;padding-left:20px;line-height:1.45}
+    .service-list li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;transform:translateY(-50%)}
+    .service-buy-row,.ebook-buy-row{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:34px}
+    .service-price,.ebook-price{font-size:clamp(1.75rem,3vw,2.45rem);font-weight:800;line-height:1}
+    .service-price small,.ebook-price small{font-size:.45em;font-weight:700}
+    .service-note{padding:30px;border-radius:26px;align-self:stretch}
+    .service-note-item+.service-note-item{margin-top:25px;padding-top:25px;border-top:1px solid rgba(0,0,0,.12)}
+    .service-note h4{margin:0 0 7px;font-size:1rem}.service-note p{margin:0;line-height:1.55}.service-note-small{font-size:.94rem}
+
+    .service-section-store{background:#F2DF7E}
+    .service-section-store .eyebrow,.service-section-store .service-price{color:#BF268A}
+    .service-section-store .service-list li::before{background:#BF268A}
+    .service-note-store{background:#BF268A;color:#fff}
+    .service-note-store .service-kicker{color:#F2DF7E}
+    .service-note-store .service-note-item+.service-note-item{border-color:rgba(242,223,126,.34)}
+    .service-btn-store{background:#BF268A;border-color:#BF268A;color:#fff}
+
+    .service-section-paid{background:#0777D9;color:#fff}
+    .service-section-paid .eyebrow,.service-section-paid .service-price{color:#BEF299}
+    .service-section-paid .service-list li::before{background:#BEF299}
+    .service-note-paid{background:#BEF299;color:#15231b}
+    .service-note-paid .service-kicker{color:#0777D9}
+    .service-note-paid .service-note-item+.service-note-item{border-color:rgba(7,119,217,.20)}
+    .service-btn-paid{background:#BEF299;border-color:#BEF299;color:#15321d}
+
+    .service-section-ebook{background:#F23078;color:#fff}
+    .ebook-editorial{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.48fr);gap:clamp(38px,6vw,82px);align-items:center}
+    .service-section-ebook .eyebrow,.service-section-ebook .ebook-price{color:#F24C27}
+    .service-section-ebook .ebook-points{margin-top:28px}
+    .service-section-ebook .ebook-point{border-color:rgba(242,76,39,.38);background:rgba(255,255,255,.08)}
+    .service-section-ebook .book{background:#F24C27;color:#fff;box-shadow:none}
+    .service-section-ebook .btn-pink{background:#F24C27;border-color:#F24C27;color:#fff}
+    .service-section-ebook .independent{color:rgba(255,255,255,.82)}
+
+    @media (max-width:900px){
+      .service-editorial,.ebook-editorial{grid-template-columns:1fr;gap:34px}
+      .service-list{grid-template-columns:1fr}
+      .service-note{padding:25px}
+    }
+
     @media (max-width: 900px) {
-      .hero-grid, .service-hero, .forwho-grid, .ebook-grid { grid-template-columns: 1fr; }
+      .service-section-store .service-card .service-content,
+      .service-section-paid .service-card .service-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .choice-grid { grid-template-columns: 1fr 1fr; }
+      .service-cards-single { grid-template-columns: 1fr; }
+      .hero-grid, .service-hero, .forwho-grid, .ebook-grid, .service-cards { grid-template-columns: 1fr; }
       .hero-art { min-height: 430px; order: -1; }
       .service-hero > .browser { max-width: 620px; margin: 0 auto; width: 100%; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
@@ -509,7 +870,376 @@
     .reset-action { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
     @media (max-width: 700px) { .reset-action { justify-content: flex-start; } .checkout-modal { padding: 24px; } }
 
-  </style>
+  
+    /* =========================================================
+       FINAL VISUAL SYSTEM — four services / one brand
+       Soft base colors + strong accents.
+       ========================================================= */
+
+    /* TIENDA ONLINE: soft green base + fuchsia/yellow accents */
+    .service-section-store {
+      background: #B9CFBD;
+      color: var(--ink);
+    }
+    .service-section-store .eyebrow,
+    .service-section-store .service-price {
+      color: #BF268A;
+    }
+    .service-section-store .service-list li::before {
+      background: #BF268A;
+    }
+    .service-section-store .service-note-store {
+      background: #F2DF7E;
+      color: var(--ink);
+      border: 1px solid rgba(191,38,138,.16);
+    }
+    .service-section-store .service-note-store .service-kicker,
+    .service-section-store .service-note-store h4 {
+      color: #BF268A;
+    }
+    .service-section-store .service-note-item + .service-note-item {
+      border-color: rgba(191,38,138,.18);
+    }
+    .service-section-store .service-btn-store {
+      background: #BF268A;
+      border-color: #BF268A;
+      color: #fff;
+    }
+
+    /* PAID MEDIA: soft pink base + blue/green accents */
+    .service-section-paid {
+      background: #F2B8C8;
+      color: var(--ink);
+    }
+    .service-section-paid .eyebrow,
+    .service-section-paid .service-price {
+      color: #0777D9;
+    }
+    .service-section-paid .service-list li::before {
+      background: #0777D9;
+    }
+    .service-section-paid .service-note-paid {
+      background: #BEF299;
+      color: #15231b;
+      border: 1px solid rgba(7,119,217,.16);
+    }
+    .service-section-paid .service-note-paid .service-kicker,
+    .service-section-paid .service-note-paid h4 {
+      color: #0777D9;
+    }
+    .service-section-paid .service-note-item + .service-note-item {
+      border-color: rgba(7,119,217,.18);
+    }
+    .service-section-paid .service-btn-paid {
+      background: #0777D9;
+      border-color: #0777D9;
+      color: #fff;
+    }
+
+    /* E-BOOK: soft beige base + fuchsia/orange accents */
+    .service-section-ebook {
+      background: #F7F0E5;
+      color: var(--ink);
+    }
+    .service-section-ebook .eyebrow,
+    .service-section-ebook .ebook-price {
+      color: #F23078;
+    }
+    .service-section-ebook .ebook-point {
+      color: var(--ink);
+      background: rgba(255,255,255,.64);
+      border-color: rgba(242,48,120,.24);
+    }
+    .service-section-ebook .book {
+      background: #F24C27;
+      color: #fff;
+      box-shadow: none;
+    }
+    .service-section-ebook .btn-pink {
+      background: #F23078;
+      border-color: #F23078;
+      color: #fff;
+    }
+    .service-section-ebook .independent {
+      color: var(--muted);
+    }
+
+    /* Keep the three new services visually consistent with the
+       established "Automatizá tus sorteos" section. */
+    .service-section-store .service-editorial,
+    .service-section-paid .service-editorial,
+    .service-section-ebook .ebook-editorial {
+      max-width: 1120px;
+    }
+
+    .service-section-store .service-main,
+    .service-section-paid .service-main,
+    .service-section-ebook .ebook-main {
+      min-width: 0;
+    }
+
+    .service-section-store .service-note,
+    .service-section-paid .service-note {
+      box-shadow: none;
+    }
+
+    /* Prevent oversized/overwhelming service headlines. */
+    .service-main h2,
+    .ebook-main h2 {
+      font-size: clamp(2.7rem, 5vw, 4.5rem);
+    }
+
+    /* Slightly tighter information blocks so the sections do not
+       become unnecessarily tall. */
+    .service-subsection {
+      margin-top: 30px;
+    }
+    .service-note {
+      padding: 28px;
+    }
+    .service-note-item + .service-note-item {
+      margin-top: 19px;
+      padding-top: 19px;
+    }
+
+    @media (max-width: 900px) {
+      .service-section-store .service-editorial,
+      .service-section-paid .service-editorial,
+      .service-section-ebook .ebook-editorial {
+        gap: 30px;
+      }
+    }
+
+
+
+    /* =========================================================
+       PALETA CROMÁTICA — ajuste de color, sin modificar layout
+       ========================================================= */
+    :root {
+      --service-violet: #8064C6;
+      --service-fuchsia: #C52A8A;
+      --service-blue: #1877D1;
+      --service-green: #38B94A;
+
+      --service-violet-soft: #EEE8F8;
+      --service-fuchsia-soft: #F9E7F1;
+      --service-blue-soft: #E7F1FA;
+      --service-green-soft: #EAF7E8;
+    }
+
+    /* Las tarjetas principales son el punto de mayor impacto cromático. */
+    .choice-lavender {
+      background: var(--service-violet);
+      color: #fff;
+    }
+    .choice-pink {
+      background: var(--service-fuchsia);
+      color: #fff;
+    }
+    .choice-green {
+      background: var(--service-green);
+      color: #fff;
+    }
+    .choice-beige {
+      background: var(--service-green);
+      color: #fff;
+    }
+    .choice-lavender h3,
+    .choice-pink h3,
+    .choice-green h3,
+    .choice-beige h3,
+    .choice-lavender p,
+    .choice-pink p,
+    .choice-green p,
+    .choice-beige p,
+    .choice-lavender .choice-link,
+    .choice-pink .choice-link,
+    .choice-green .choice-link,
+    .choice-beige .choice-link {
+      color: #fff;
+    }
+    /* Asignación real de color por servicio (independiente del nombre histórico de la clase). */
+    .choice[href="#sorteos"] { background: var(--service-violet); }
+    .choice[href="#tienda"] { background: var(--service-fuchsia); }
+    .choice[href="#paid-media"] { background: var(--service-blue); }
+    .choice[href="#ebook"] { background: var(--service-green); }
+
+    .choice-lavender .choice-icon,
+    .choice-pink .choice-icon,
+    .choice-green .choice-icon,
+    .choice-beige .choice-icon {
+      filter: saturate(.9);
+    }
+
+    /* Mantener las secciones de detalle suaves; el color fuerte queda como acento. */
+    .service-section-store {
+      background: var(--service-fuchsia-soft);
+    }
+    .service-section-store .service-card {
+      background: #fffafc;
+      border-color: rgba(197,42,138,.18);
+    }
+    .service-section-store .eyebrow,
+    .service-section-store .service-price {
+      color: var(--service-fuchsia);
+    }
+
+    .service-section-paid {
+      background: var(--service-blue-soft);
+    }
+    .service-section-paid .service-card {
+      background: #fbfdff;
+      border-color: rgba(24,119,209,.18);
+    }
+    .service-section-paid .eyebrow,
+    .service-section-paid .service-price {
+      color: var(--service-blue);
+    }
+
+    .service-section-ebook {
+      background: #FFF7F2;
+      color: var(--ink);
+    }
+    .service-section-ebook .book {
+      background: var(--service-green);
+      color: #fff;
+      box-shadow: 20px 25px 0 rgba(56,185,74,.18), var(--shadow);
+    }
+    .service-section-ebook .eyebrow,
+    .service-section-ebook .ebook-price {
+      color: var(--service-green);
+    }
+
+    /* Tarjetas internas: fondos claros, acentos de la categoría. */
+    .service-card.store {
+      background: var(--service-fuchsia-soft);
+    }
+    .service-card.store::after {
+      background: var(--service-fuchsia);
+      opacity: .12;
+    }
+    .service-card.paid {
+      background: var(--service-blue-soft);
+    }
+    .service-card.paid::after {
+      background: var(--service-blue);
+      opacity: .12;
+    }
+    .store .service-icon {
+      background: var(--service-fuchsia);
+      color: #fff;
+    }
+    .paid .service-icon {
+      background: var(--service-blue);
+      color: #fff;
+    }
+    .store .btn {
+      background: var(--service-fuchsia);
+      color: #fff;
+    }
+    .paid .btn {
+      background: var(--service-blue);
+      color: #fff;
+    }
+
+    /* Evitar que los bloques secundarios compitan con los cuatro servicios. */
+    .feature:nth-child(3n) { background: var(--service-green-soft); }
+    .feature:nth-child(4n) { background: var(--service-fuchsia-soft); }
+    .for-who { background: var(--service-violet-soft); }
+    .reset { background: var(--service-violet-soft); }
+    .ebook { background: #FFF7F2; }
+
+    /* Acentos secundarios alineados con la nueva paleta. */
+    .step { color: var(--service-violet); }
+    .price-card .launch { color: var(--service-fuchsia); }
+    .price-card .btn { background: var(--service-fuchsia); color: #fff; }
+    .ebook-point { background: rgba(56,185,74,.10); }
+
+  .for-who { background: #C9B7E8 !important; }
+
+</style>
+
+<style id="marola-four-choice-colors-final">
+/* ÚNICAMENTE: colores de las 4 tarjetas de "Elegí la solución que necesitás". */
+
+/* Páginas para sorteos — exactamente el fondo de "Automatizá tus sorteos" */
+.choice-grid a[href="#sorteos"] {
+  background: #C9B7E8 !important;
+}
+
+/* Tienda online — exactamente el fucsia de "Información importante"
+   y amarillo para el texto/acento */
+.choice-grid a[href="#tienda"] {
+  background: #BF268A !important;
+  color: #F2DF7E !important;
+}
+.choice-grid a[href="#tienda"] h3,
+.choice-grid a[href="#tienda"] p,
+.choice-grid a[href="#tienda"] .choice-link {
+  color: #F2DF7E !important;
+}
+
+/* Gestión de Paid Media — NO modificar */
+.choice-grid a[href="#paid-media"] {
+  background: #1877D1 !important;
+}
+
+/* E-book — exactamente el verde del bloque
+   "La inversión publicitaria NO está incluida" */
+.choice-grid a[href="#ebook"] {
+  background: #BEF299 !important;
+  color: #29242B !important;
+}
+</style>
+
+
+<style id="marola-choice-colors-final-v2">
+/* Ajuste final solicitado: colores suaves de fondo + color de identidad en texto. */
+.choice-grid a[href="#sorteos"] {
+  background: #C9B7E8 !important;
+  color: #8064C6 !important;
+}
+.choice-grid a[href="#sorteos"] h3,
+.choice-grid a[href="#sorteos"] p,
+.choice-grid a[href="#sorteos"] .choice-link {
+  color: #8064C6 !important;
+}
+
+.choice-grid a[href="#tienda"] {
+  background: #F9E7F1 !important;
+  color: #C52A8A !important;
+}
+.choice-grid a[href="#tienda"] h3,
+.choice-grid a[href="#tienda"] p,
+.choice-grid a[href="#tienda"] .choice-link {
+  color: #C52A8A !important;
+}
+
+.choice-grid a[href="#paid-media"] {
+  background: #E7F1FA !important;
+  color: #1877D1 !important;
+}
+.choice-grid a[href="#paid-media"] h3,
+.choice-grid a[href="#paid-media"] p,
+.choice-grid a[href="#paid-media"] .choice-link {
+  color: #1877D1 !important;
+}
+
+.choice-grid a[href="#ebook"] {
+  background: #F7F0E5 !important;
+  color: #38B94A !important;
+}
+.choice-grid a[href="#ebook"] h3,
+.choice-grid a[href="#ebook"] p,
+.choice-grid a[href="#ebook"] .choice-link {
+  color: #38B94A !important;
+}
+
+/* Sin emojis/iconos en los cuatro recuadros. */
+.choice-grid .choice-icon {
+  display: none !important;
+}
+</style>
 </head>
 
 <body>
@@ -518,8 +1248,10 @@
     <a class="brand" href="#inicio">evelyn maroli.</a>
     <div class="nav-links">
       <a href="#sorteos">Páginas para sorteos</a>
+      <a href="#tienda">Tienda online</a>
+      <a href="#paid-media">Paid Media</a>
       <a href="#ebook">E-book</a>
-      <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página</a>
+      
     </div>
   </nav>
 
@@ -533,8 +1265,7 @@
             <h1>Herramientas para hacer crecer tu emprendimiento.</h1>
             <p>Servicios y recursos pensados para ayudarte a organizar, automatizar y potenciar lo que hacés.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#sorteos">Ver páginas para sorteos ↓</a>
-              <a class="btn btn-light" href="#ebook">Ver e-book</a>
+              <a class="btn btn-primary" href="#servicios">Ver servicios ↓</a>
             </div>
             <p class="hero-note">Elegí la solución que necesitás y conocé todos los detalles.</p>
           </div>
@@ -552,19 +1283,44 @@
           </div>
         </div>
 
-        <div class="choice-wrap reveal">
+        <div class="choice-wrap reveal" id="servicios">
+          <div class="section-intro choice-intro">
+            <span class="eyebrow">Elegí la solución que necesitás</span>
+            <h2>Elegí la solución que necesitás.</h2>
+            <p>Servicios pensados para ayudarte a vender, organizar, automatizar y potenciar tu emprendimiento.</p>
+          </div>
+
           <div class="choice-grid">
             <a href="#sorteos" class="choice choice-lavender">
               <div>
-                <div class="choice-icon">🌐</div>
+                <div class="choice-icon" aria-hidden="true"></div>
                 <h3>Páginas para sorteos</h3>
                 <p>Automatizá la venta y gestión de tus números.</p>
               </div>
               <span class="choice-link">Conocer el servicio →</span>
             </a>
-            <a href="#ebook" class="choice choice-pink">
+
+            <a href="#tienda" class="choice choice-green">
               <div>
-                <div class="choice-icon">📖</div>
+                <div class="choice-icon" aria-hidden="true"></div>
+                <h3>Tienda online</h3>
+                <p>Tu tienda personalizada, lista para empezar a vender.</p>
+              </div>
+              <span class="choice-link">Conocer el servicio →</span>
+            </a>
+
+            <a href="#paid-media" class="choice choice-pink">
+              <div>
+                <div class="choice-icon" aria-hidden="true"></div>
+                <h3>Gestión de Paid Media</h3>
+                <p>Campañas pensadas para potenciar tu negocio.</p>
+              </div>
+              <span class="choice-link">Conocer el servicio →</span>
+            </a>
+
+            <a href="#ebook" class="choice choice-beige">
+              <div>
+                <div class="choice-icon" aria-hidden="true"></div>
                 <h3>E-book para emprendedores</h3>
                 <p>Herramientas, ideas y estrategias para tu emprendimiento.</p>
               </div>
@@ -583,73 +1339,87 @@
       </div>
     </div>
 
-    <section id="sorteos" class="sorteos">
+        <section id="tienda" class="new-services service-section-store">
       <div class="container">
-        <div class="service-hero">
-          <div class="reveal">
-            <span class="eyebrow">Servicio para sorteos</span>
-            <h2>Automatizá tus sorteos.</h2>
-            <p>Una página personalizada para vender tus números, registrar las compras y tener toda la información organizada automáticamente.</p>
-
-            <div class="price-pill">
-              <small>Precio de lanzamiento</small>
-              <strong>$98.000 ARS</strong>
+        <div class="service-editorial reveal">
+          <div class="service-main">
+            <span class="eyebrow">TIENDA ONLINE</span>
+            <h2>Tienda online</h2>
+            <p class="service-lead">Una tienda online personalizada, configurada y preparada para que puedas comenzar a mostrar y vender tus productos.</p>
+            <div class="service-subsection">
+              <span class="service-kicker">¿Qué incluye?</span>
+              <ul class="service-list">
+                <li>Diseño y personalización.</li>
+                <li>Configuración de la tienda.</li>
+                <li>Carga inicial de productos.</li>
+                <li>Medios de pago.</li>
+                <li>Métodos de envío.</li>
+                <li>Configuración e integración de MiCorreo.</li>
+                <li>Vinculación con redes sociales.</li>
+                <li>Configuración del dominio.</li>
+                <li>Explicación para administrar la tienda.</li>
+              </ul>
             </div>
-
-            <div>
-              <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
-            </div>
-          </div>
-
-          <div class="browser reveal" aria-label="Ejemplo visual de una página para sorteo">
-            <div class="browser-top">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <div class="browser-screen">
-              <div class="mock-logo"></div>
-              <div class="mock-title"></div>
-              <div class="mock-sub"></div>
-              <div class="numbers">
-                <div class="number">01</div><div class="number">02</div><div class="number selected">03</div><div class="number">04</div><div class="number">05</div>
-                <div class="number">06</div><div class="number selected">07</div><div class="number">08</div><div class="number">09</div><div class="number">10</div>
-                <div class="number">11</div><div class="number">12</div><div class="number">13</div><div class="number selected">14</div><div class="number">15</div>
-                <div class="number">16</div><div class="number">17</div><div class="number">18</div><div class="number">19</div><div class="number">20</div>
-              </div>
-              <div class="mock-button"></div>
+            <div class="service-buy-row">
+              <div class="service-price">$120.000 <small>ARS</small></div>
+              <a class="btn service-btn-store" href="#" onclick="openCheckout(event, 'tienda')">Quiero mi tienda →</a>
             </div>
           </div>
+          <aside class="service-note service-note-store">
+            <span class="service-kicker">Información importante</span>
+            <div class="service-note-item"><h4>Importante</h4><p>El cliente debe proporcionar las imágenes, nombres, precios, descripciones y demás información necesaria de sus productos.</p></div>
+            <div class="service-note-item"><h4>Carga adicional</h4><p><strong>$11.000 por tanda.</strong> Podés enviar todos los productos que quieras agregar en una misma tanda.</p></div>
+            <div class="service-note-item"><h4>Costos externos no incluidos</h4><p>La suscripción mensual de Empretienda, el dominio y otros servicios externos se abonan aparte.</p></div>
+            <div class="service-note-item"><h4>Plataforma</h4><p>La tienda se desarrolla utilizando <strong>Empretienda</strong>.</p></div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <section class="process">
+        <section id="paid-media" class="new-services service-section-paid">
       <div class="container">
-        <div class="section-intro reveal">
-          <span class="eyebrow">Así funciona</span>
-          <h2>De la elección del número al registro de la compra.</h2>
-          <p>Tu cliente hace el proceso desde la página y la información queda organizada para vos.</p>
-        </div>
-
-        <div class="process-list">
-          <article class="process-card reveal"><div class="step">01</div><h3>Entra a la página</h3><p>Tu cliente accede a la página personalizada de tu sorteo.</p></article>
-          <article class="process-card reveal"><div class="step">02</div><h3>Elige sus números</h3><p>Selecciona los números que quiere comprar entre los disponibles.</p></article>
-          <article class="process-card reveal"><div class="step">03</div><h3>Completa sus datos</h3><p>Ingresa la información necesaria para registrar la compra.</p></article>
-          <article class="process-card reveal"><div class="step">04</div><h3>Realiza el pago</h3><p>Completa el pago mediante el medio de pago integrado.</p></article>
-          <article class="process-card reveal"><div class="step">05</div><h3>La compra queda registrada</h3><p>La información de la compra se registra automáticamente.</p></article>
+        <div class="service-editorial reveal">
+          <div class="service-main">
+            <span class="eyebrow">PAID MEDIA</span>
+            <h2>Gestión de Paid Media</h2>
+            <p class="service-lead">Gestión profesional de campañas publicitarias en Meta Ads para aumentar la visibilidad y acompañar el crecimiento de tu negocio.</p>
+            <div class="service-subsection">
+              <span class="service-kicker">Incluye</span>
+              <ul class="service-list">
+                <li>Configuración de campañas.</li>
+                <li>Definición de objetivos.</li>
+                <li>Configuración de públicos.</li>
+                <li>Seguimiento y optimización.</li>
+                <li>Análisis de métricas.</li>
+                <li>Informe mensual.</li>
+                <li>Recomendaciones.</li>
+              </ul>
+            </div>
+            <div class="service-buy-row">
+              <div class="service-price">$250.000 <small>ARS / mes</small></div>
+              <a class="btn service-btn-paid" href="#" onclick="openCheckout(event, 'paidMedia')">Quiero contratar →</a>
+            </div>
+          </div>
+          <aside class="service-note service-note-paid">
+            <span class="service-kicker">Importante</span>
+            <div class="service-note-item"><h4>La inversión publicitaria NO está incluida.</h4><p>La inversión destinada a Meta Ads se abona aparte y queda a cargo del cliente.</p></div>
+            <div class="service-note-item service-note-small"><p>El servicio no incluye producción ilimitada de contenido, diseño gráfico ni edición ilimitada de videos para anuncios. En caso de necesitar piezas publicitarias, se pueden cotizar por separado.</p></div>
+          </aside>
         </div>
       </div>
     </section>
+
 
     
 
-    <section class="for-who">
+    <section id="sorteos" class="for-who">
       <div class="container">
         <div class="forwho-grid">
           <div class="reveal">
             <span class="eyebrow">Pensada para vos</span>
             <h2>Si hacés sorteos, esto te puede simplificar muchísimo.</h2>
             <div class="forwho-cta">
-              <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
+              <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Precio de lanzamiento · $98.000 ARS</a>
             </div>
           </div>
           <div class="forwho-list">
@@ -684,31 +1454,25 @@
       </div>
     </section>
 
-    <section id="ebook" class="ebook">
+        <section id="ebook" class="ebook service-section-ebook">
       <div class="container">
-        <div class="ebook-grid">
-          <div class="book reveal">
-            <h3>Mi e-book<br>para<br>emprendedores</h3>
-            <div class="book-bottom">Herramientas · ideas · estrategias</div>
-          </div>
-
-          <div class="reveal">
-            <span class="eyebrow">Otro recurso para vos</span>
-            <h2>Mi e-book para emprendedores.</h2>
-            <p style="margin-top:22px; font-size:1.08rem;">Herramientas, ideas y estrategias para ayudarte a organizarte, crear contenido y hacer crecer tu emprendimiento.</p>
-
-            <div class="ebook-price">$6.500 ARS</div>
-
+        <div class="ebook-editorial reveal">
+          <div class="ebook-main">
+            <span class="eyebrow">RECURSO DIGITAL</span>
+            <h2>Mi e-book para emprendedores</h2>
+            <p class="service-lead">Herramientas, ideas y estrategias para ayudarte a organizarte, crear contenido y hacer crecer tu emprendimiento.</p>
             <div class="ebook-points">
-              <div class="ebook-point">💡 Ideas</div>
-              <div class="ebook-point">📝 Herramientas</div>
-              <div class="ebook-point">📱 Contenido</div>
-              <div class="ebook-point">🚀 Estrategias</div>
+              <div class="ebook-point">💡 Ideas</div><div class="ebook-point">📝 Herramientas</div>
+              <div class="ebook-point">📱 Contenido</div><div class="ebook-point">🚀 Estrategias</div>
             </div>
-
-            <!-- Reemplazar # por el enlace real de compra del e-book -->
-            <a class="btn btn-pink" href="#" onclick="return ebookPlaceholder(event)">Quiero mi e-book →</a>
+            <div class="ebook-buy-row">
+              <div class="ebook-price">$6.500 <small>ARS</small></div>
+              <a class="btn btn-pink" href="#" onclick="openCheckout(event, 'ebook')">Quiero mi e-book →</a>
+            </div>
             <p class="independent">Producto digital independiente del servicio de páginas para sorteos.</p>
+          </div>
+          <div class="ebook-visual">
+            <div class="book"><h3>Mi e-book<br>para<br>emprendedores</h3><div class="book-bottom">Herramientas · ideas · estrategias</div></div>
           </div>
         </div>
       </div>
@@ -718,10 +1482,12 @@
       <div class="container reveal">
         <span class="eyebrow">Elegí tu solución</span>
         <h2>¿Qué necesitás para tu emprendimiento?</h2>
-        <p>Si querés automatizar tu próximo sorteo, puedo crear tu página personalizada.</p>
+        <p>Si querés automatizar, vender online o potenciar tus campañas, puedo ayudarte a elegir la solución que necesitás.</p>
         <div class="final-actions">
           <a class="btn btn-primary" href="#" onclick="openCheckout(event, 'pagina')">Quiero mi página →</a>
           <a class="btn btn-light" href="#" onclick="openCheckout(event, 'ebook')">Quiero el e-book →</a>
+          <a class="btn btn-light" href="#" onclick="openCheckout(event, 'tienda')">Quiero mi tienda online →</a>
+          <a class="btn btn-light" href="#" onclick="openCheckout(event, 'paidMedia')">Quiero contratar publicidad en redes sociales →</a>
         </div>
       </div>
     </section>
@@ -774,7 +1540,9 @@
     const products = {
       pagina: { name: 'Página personalizada para sorteo', price: 98000 },
       reinicio: { name: 'Reinicio de números', price: 11000 },
-      ebook: { name: 'E-book para emprendedores', price: 6500 }
+      ebook: { name: 'E-book para emprendedores', price: 6500 },
+      tienda: { name: 'Creación de tienda online', price: 120000 },
+      paidMedia: { name: 'Gestión de Paid Media', price: 250000 }
     };
     let selectedProduct = null;
     function openCheckout(event, productKey) {

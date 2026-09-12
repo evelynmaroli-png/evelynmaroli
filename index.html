@@ -1570,8 +1570,9 @@
       try {
         const response = await fetch('/api/create-preference', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         const result = await response.json();
-        if (!response.ok || !result.init_point) throw new Error(result.error || 'No se pudo iniciar el pago.');
-        window.location.href = result.init_point;
+        const paymentUrl = result.sandbox_init_point || result.init_point;
+        if (!response.ok || !paymentUrl) throw new Error(result.error || 'No se pudo iniciar el pago.');
+        window.location.href = paymentUrl;
       } catch (error) { message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.'; }
     }
     function showPaymentResult() {

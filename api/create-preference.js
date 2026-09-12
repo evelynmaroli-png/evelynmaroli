@@ -53,6 +53,16 @@ module.exports = async function handler(req, res) {
       'E-book para emprendedores': {
         title: 'E-book para emprendedores',
         price: 6500
+      },
+
+      'Creación de tienda online': {
+        title: 'Creación de tienda online',
+        price: 120000
+      },
+
+      'Gestión de Paid Media': {
+        title: 'Gestión de Paid Media',
+        price: 250000
       }
     };
 

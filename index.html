@@ -1362,7 +1362,7 @@
             </div>
             <div class="service-buy-row">
               <div class="service-price">$120.000 <small>ARS</small></div>
-              <a class="btn service-btn-store" href="#" onclick="openCheckout(event, 'tienda')">Quiero mi tienda →</a>
+              <button class="btn service-btn-store" type="button" onclick="openCheckout(event, 'tienda')">Quiero mi tienda →</button>
             </div>
           </div>
           <aside class="service-note service-note-store">
@@ -1397,7 +1397,7 @@
             </div>
             <div class="service-buy-row">
               <div class="service-price">$250.000 <small>ARS / mes</small></div>
-              <a class="btn service-btn-paid" href="#" onclick="openCheckout(event, 'paidMedia')">Quiero contratar →</a>
+              <button class="btn service-btn-paid" type="button" onclick="openCheckout(event, 'paidMedia')">Quiero contratar →</button>
             </div>
           </div>
           <aside class="service-note service-note-paid">
@@ -1512,6 +1512,35 @@
     </div>
   </div>
 
+  <div class="checkout-overlay" id="paymentMethodOverlay" role="dialog" aria-modal="true" aria-labelledby="paymentMethodTitle">
+    <div class="checkout-modal">
+      <button class="checkout-close" type="button" onclick="closePaymentMethod()" aria-label="Cerrar">×</button>
+      <span class="eyebrow">Cómo querés pagar</span>
+      <h3 id="paymentMethodTitle">Elegí tu medio de pago</h3>
+      <p style="margin-top:10px;">Seleccioná una de las opciones para continuar.</p>
+      <div class="checkout-form" style="margin-top:24px;">
+        <button class="btn btn-primary" type="button" onclick="payWithMercadoPago()">Mercado Pago →</button>
+        <button class="btn btn-light" type="button" onclick="showBankTransfer()">Transferencia bancaria →</button>
+        <div class="checkout-message" id="paymentMethodMessage"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-overlay" id="bankTransferOverlay" role="dialog" aria-modal="true" aria-labelledby="bankTransferTitle">
+    <div class="checkout-modal">
+      <button class="checkout-close" type="button" onclick="closeBankTransfer()" aria-label="Cerrar">×</button>
+      <span class="eyebrow">Datos para realizar la transferencia</span>
+      <h3 id="bankTransferTitle">Completá tu pago por transferencia</h3>
+      <p style="margin-top:10px;">Transferí el importe correspondiente a los siguientes datos:</p>
+      <div class="checkout-form" style="margin-top:22px;">
+        <div class="checkout-product" id="bankTransferProduct"></div>
+        <div class="checkout-product">Alias: evelyn.maroli</div>
+        <p style="font-size:.85rem;">Una vez realizada la transferencia, enviá el comprobante por WhatsApp.</p>
+        <a class="btn btn-primary" id="whatsappProofButton" href="#" target="_blank" rel="noopener">Enviar comprobante por WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+
   <div class="checkout-overlay" id="paymentResultOverlay" role="dialog" aria-modal="true" aria-labelledby="paymentResultTitle">
     <div class="checkout-modal">
       <span class="eyebrow" id="paymentResultEyebrow">Compra realizada</span>
@@ -1547,25 +1576,74 @@
     let selectedProduct = null;
     function openCheckout(event, productKey) {
       if (event) event.preventDefault();
-      selectedProduct = products[productKey];
+
+      const product = products[productKey];
+      if (!product) {
+        console.error('Producto no encontrado:', productKey);
+        return;
+      }
+
+      selectedProduct = product;
       sessionStorage.setItem('checkoutProductKey', productKey);
-      document.getElementById('checkoutProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
+      document.getElementById('checkoutProduct').textContent = `${product.name} · $${product.price.toLocaleString('es-AR')} ARS`;
       document.getElementById('checkoutMessage').textContent = '';
       document.getElementById('checkoutOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeCheckout() { document.getElementById('checkoutOverlay').classList.remove('open'); document.body.style.overflow = ''; }
-    async function continueToPayment() {
+    function continueToPayment() {
       const data = { product: selectedProduct, nombre: document.getElementById('checkoutNombre').value.trim(), apellido: document.getElementById('checkoutApellido').value.trim(), celular: document.getElementById('checkoutCelular').value.trim(), email: document.getElementById('checkoutEmail').value.trim() };
       const message = document.getElementById('checkoutMessage');
       if (!data.nombre || !data.apellido || !data.celular || !data.email) { message.textContent = 'Completá todos los datos para continuar.'; return; }
+
+      sessionStorage.setItem('checkoutCustomerData', JSON.stringify({
+        nombre: data.nombre,
+        apellido: data.apellido,
+        celular: data.celular,
+        email: data.email
+      }));
+
+      closeCheckout();
+      document.getElementById('paymentMethodMessage').textContent = '';
+      document.getElementById('paymentMethodOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    async function payWithMercadoPago() {
+      const message = document.getElementById('paymentMethodMessage');
+      const customerData = JSON.parse(sessionStorage.getItem('checkoutCustomerData') || '{}');
+      const data = { product: selectedProduct, ...customerData };
+      if (!selectedProduct) { message.textContent = 'No se pudo identificar el producto.'; return; }
       message.textContent = 'Preparando el pago…';
       try {
         const response = await fetch('/api/create-preference', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         const result = await response.json();
-        if (!response.ok || !result.init_point) throw new Error(result.error || 'No se pudo iniciar el pago.');
-        window.location.href = result.init_point;
+        const paymentUrl = result.sandbox_init_point || result.init_point;
+        if (!response.ok || !paymentUrl) throw new Error(result.error || 'No se pudo iniciar el pago.');
+        window.location.href = paymentUrl;
       } catch (error) { message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.'; }
+    }
+
+    function closePaymentMethod() {
+      document.getElementById('paymentMethodOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showBankTransfer() {
+      if (!selectedProduct) return;
+      closePaymentMethod();
+      document.getElementById('bankTransferProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
+      const customerData = JSON.parse(sessionStorage.getItem('checkoutCustomerData') || '{}');
+      const whatsappMessage = `Hola Evelyn, te envío el comprobante de la transferencia correspondiente a ${selectedProduct.name} por $${selectedProduct.price.toLocaleString('es-AR')} ARS.`;
+      const whatsappNumber = '5491160115583';
+      document.getElementById('whatsappProofButton').href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+      document.getElementById('bankTransferOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBankTransfer() {
+      document.getElementById('bankTransferOverlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
     function showPaymentResult() {
       const params = new URLSearchParams(window.location.search);
@@ -1612,6 +1690,8 @@
     showPaymentResult();
 
     document.getElementById('checkoutOverlay').addEventListener('click', (event) => { if (event.target.id === 'checkoutOverlay') closeCheckout(); });
+    document.getElementById('paymentMethodOverlay').addEventListener('click', (event) => { if (event.target.id === 'paymentMethodOverlay') closePaymentMethod(); });
+    document.getElementById('bankTransferOverlay').addEventListener('click', (event) => { if (event.target.id === 'bankTransferOverlay') closeBankTransfer(); });
   </script>
 
 </body>

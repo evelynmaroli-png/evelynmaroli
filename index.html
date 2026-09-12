@@ -1585,6 +1585,8 @@
 
       selectedProduct = product;
       sessionStorage.setItem('checkoutProductKey', productKey);
+      sessionStorage.removeItem('transferRegistered');
+      sessionStorage.removeItem('transferReference');
       document.getElementById('checkoutProduct').textContent = `${product.name} · $${product.price.toLocaleString('es-AR')} ARS`;
       document.getElementById('checkoutMessage').textContent = '';
       document.getElementById('checkoutOverlay').classList.add('open');
@@ -1632,13 +1634,76 @@
     function showBankTransfer() {
       if (!selectedProduct) return;
       closePaymentMethod();
-      document.getElementById('bankTransferProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
-      const customerData = JSON.parse(sessionStorage.getItem('checkoutCustomerData') || '{}');
-      const whatsappMessage = `Hola Evelyn, te envío el comprobante de la transferencia correspondiente a ${selectedProduct.name} por $${selectedProduct.price.toLocaleString('es-AR')} ARS.`;
+
+      document.getElementById('bankTransferProduct').textContent =
+        `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
+
+      const customerData = JSON.parse(
+        sessionStorage.getItem('checkoutCustomerData') || '{}'
+      );
+
+      const whatsappMessage =
+        `Hola Evelyn, te envío el comprobante de la transferencia correspondiente a ${selectedProduct.name} por $${selectedProduct.price.toLocaleString('es-AR')} ARS.`;
+
       const whatsappNumber = '5491160115583';
-      document.getElementById('whatsappProofButton').href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+      document.getElementById('whatsappProofButton').href =
+        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
       document.getElementById('bankTransferOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
+
+      // Registramos la intención de compra por transferencia una sola vez.
+      registerBankTransfer();
+    }
+
+    async function registerBankTransfer() {
+      if (!selectedProduct) return;
+
+      const customerData = JSON.parse(
+        sessionStorage.getItem('checkoutCustomerData') || '{}'
+      );
+
+      if (
+        sessionStorage.getItem('transferRegistered') === 'true'
+      ) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/registrar-transferencia', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            product: selectedProduct,
+            ...customerData
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          console.error(
+            'No se pudo registrar la transferencia:',
+            result.error || 'Error desconocido'
+          );
+          return;
+        }
+
+        sessionStorage.setItem('transferRegistered', 'true');
+        sessionStorage.setItem(
+          'transferReference',
+          result.referencia || ''
+        );
+
+      } catch (error) {
+        console.error(
+          'Error registrando transferencia:',
+          error
+        );
+      }
     }
 
     function closeBankTransfer() {

@@ -1,10 +1,13 @@
+```javascript
 module.exports = async function handler(req, res) {
+  // Solo permitimos POST
   if (req.method !== 'POST') {
     return res.status(405).json({
       error: 'Método no permitido.'
     });
   }
 
+  // Token configurado en Vercel
   const token = process.env.MP_ACCESS_TOKEN;
 
   if (!token) {
@@ -22,6 +25,7 @@ module.exports = async function handler(req, res) {
       email
     } = req.body || {};
 
+    // Validar datos recibidos
     if (
       !product ||
       !product.name ||
@@ -36,8 +40,8 @@ module.exports = async function handler(req, res) {
     }
 
     /*
-     * Los precios se definen en el servidor.
-     * No confiamos en el precio enviado desde el navegador.
+     * PRECIOS DEFINIDOS EN EL SERVIDOR
+     * No confiamos en el precio enviado por el navegador.
      */
     const products = {
       'Página personalizada para sorteo': {
@@ -66,6 +70,7 @@ module.exports = async function handler(req, res) {
       }
     };
 
+    // Buscar producto válido
     const selectedProduct = products[product.name];
 
     if (!selectedProduct) {
@@ -74,9 +79,11 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    // Detectar dominio actual
     const origin =
       `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}`;
 
+    // Crear preferencia
     const preference = {
       items: [
         {
@@ -118,6 +125,7 @@ module.exports = async function handler(req, res) {
         `${origin}/api/webhook`
     };
 
+    // Enviar preferencia a Mercado Pago
     const mp = await fetch(
       'https://api.mercadopago.com/checkout/preferences',
       {
@@ -134,24 +142,32 @@ module.exports = async function handler(req, res) {
 
     const data = await mp.json();
 
+    // Mostrar el error real de Mercado Pago en los logs de Vercel
     if (!mp.ok) {
-      console.error('Mercado Pago:', data);
+      console.error('Mercado Pago rechazó la preferencia:', data);
 
       return res.status(mp.status).json({
         error:
           data.message ||
+          data.error ||
           'Mercado Pago rechazó la solicitud.'
       });
     }
 
+    console.log('Preferencia creada:', {
+      id: data.id,
+      init_point: !!data.init_point,
+      sandbox_init_point: !!data.sandbox_init_point
+    });
+
+    // Devolver ambos enlaces al frontend
     return res.status(200).json({
-      init_point: data.init_point,
-      sandbox_init_point: data.sandbox_init_point,
+      init_point: data.init_point || null,
+      sandbox_init_point: data.sandbox_init_point || null,
       id: data.id
     });
 
   } catch (error) {
-
     console.error('Error creando preferencia:', error);
 
     return res.status(500).json({
@@ -159,3 +175,29 @@ module.exports = async function handler(req, res) {
     });
   }
 };
+```
+
+**Pero ojo:** con este archivo solo no terminamos el cambio. En tu `index` tenés que modificar la parte que recibe la respuesta de `/api/create-preference`.
+
+Tiene que quedar así:
+
+```javascript
+const result = await response.json();
+
+if (!response.ok) {
+  throw new Error(result.error || 'No se pudo crear el pago.');
+}
+
+const paymentUrl =
+  result.sandbox_init_point || result.init_point;
+
+if (!paymentUrl) {
+  throw new Error('No se recibió el enlace de pago.');
+}
+
+window.location.href = paymentUrl;
+```
+
+Así, cuando estés probando con la credencial de prueba, **va a intentar usar `sandbox_init_point` primero**.
+
+Si querés, también puedo agarrar **el `index-corregido-completo.html` que ya me habías pasado y decirte exactamente qué bloque reemplazar**, para que no tengas que buscarlo a mano.

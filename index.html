@@ -1615,15 +1615,47 @@
       const message = document.getElementById('paymentMethodMessage');
       const customerData = JSON.parse(sessionStorage.getItem('checkoutCustomerData') || '{}');
       const data = { product: selectedProduct, ...customerData };
-      if (!selectedProduct) { message.textContent = 'No se pudo identificar el producto.'; return; }
+
+      if (!selectedProduct) {
+        message.textContent = 'No se pudo identificar el producto.';
+        return;
+      }
+
       message.textContent = 'Preparando el pago…';
+
       try {
-        const response = await fetch('/api/create-preference', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-        const result = await response.json();
-        const paymentUrl = result.sandbox_init_point || result.init_point;
-        if (!response.ok || !paymentUrl) throw new Error(result.error || 'No se pudo iniciar el pago.');
+        const response = await fetch('/api/mercadopago', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        // Leemos primero como texto para evitar el error
+        // "Unexpected token... is not valid JSON" si el servidor devuelve HTML/texto.
+        const raw = await response.text();
+        let result;
+
+        try {
+          result = raw ? JSON.parse(raw) : {};
+        } catch {
+          throw new Error(
+            response.ok
+              ? 'El servidor devolvió una respuesta inesperada.'
+              : 'El servidor de pago devolvió un error. Revisá Vercel y el archivo /api/mercadopago.js.'
+          );
+        }
+
+        const paymentUrl = result.init_point || result.sandbox_init_point;
+
+        if (!response.ok || !paymentUrl) {
+          throw new Error(result.error || 'No se pudo iniciar el pago con Mercado Pago.');
+        }
+
         window.location.href = paymentUrl;
-      } catch (error) { message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.'; }
+      } catch (error) {
+        console.error('Error iniciando Mercado Pago:', error);
+        message.textContent = error.message || 'Ocurrió un error. Intentá nuevamente.';
+      }
     }
 
     function closePaymentMethod() {

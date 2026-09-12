@@ -1362,7 +1362,7 @@
             </div>
             <div class="service-buy-row">
               <div class="service-price">$120.000 <small>ARS</small></div>
-              <a class="btn service-btn-store" href="#" onclick="openCheckout(event, 'tienda')">Quiero mi tienda →</a>
+              <button class="btn service-btn-store" type="button" onclick="openCheckout(event, 'tienda')">Quiero mi tienda →</button>
             </div>
           </div>
           <aside class="service-note service-note-store">
@@ -1397,7 +1397,7 @@
             </div>
             <div class="service-buy-row">
               <div class="service-price">$250.000 <small>ARS / mes</small></div>
-              <a class="btn service-btn-paid" href="#" onclick="openCheckout(event, 'paidMedia')">Quiero contratar →</a>
+              <button class="btn service-btn-paid" type="button" onclick="openCheckout(event, 'paidMedia')">Quiero contratar →</button>
             </div>
           </div>
           <aside class="service-note service-note-paid">
@@ -1547,9 +1547,16 @@
     let selectedProduct = null;
     function openCheckout(event, productKey) {
       if (event) event.preventDefault();
-      selectedProduct = products[productKey];
+
+      const product = products[productKey];
+      if (!product) {
+        console.error('Producto no encontrado:', productKey);
+        return;
+      }
+
+      selectedProduct = product;
       sessionStorage.setItem('checkoutProductKey', productKey);
-      document.getElementById('checkoutProduct').textContent = `${selectedProduct.name} · $${selectedProduct.price.toLocaleString('es-AR')} ARS`;
+      document.getElementById('checkoutProduct').textContent = `${product.name} · $${product.price.toLocaleString('es-AR')} ARS`;
       document.getElementById('checkoutMessage').textContent = '';
       document.getElementById('checkoutOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
